@@ -37,12 +37,12 @@ public class BasicHandle {
                             List<String> lw = separateWords(separatedWord[j]);
                             for(int m = 0; m < lw.size(); m ++){
                                 if(lw.get(m).length() > 3){
-                                    if((!lw.get(m).equals("package"))&&(!lw.get(m).equals("org"))&&(!lw.get(m).equals("apache"))&&(!lw.get(m).equals("import"))&&(!lw.get(m).equals("java"))&&
-                                            (!lw.get(m).equals("string"))&&(!lw.get(m).equals("public"))&&(!lw.get(m).equals("private"))&&(!lw.get(m).equals("protected"))&&(!lw.get(m).equals("static"))&&
-                                            (!lw.get(m).equals("final"))&&(!lw.get(m).equals("boolean"))&&(!lw.get(m).equals("void"))&&(!lw.get(m).equals("object"))&&(!lw.get(m).equals("interface "))&&
-                                            (!lw.get(m).equals("extends"))&&(!lw.get(m).equals("javax"))&&(!lw.get(m).equals("class"))&&(!lw.get(m).equals("beans"))&&(!lw.get(m).equals("persistence"))&&(!lw.get(m).equals("type"))&&
-                                            (!lw.get(m).equals("null"))&&(!lw.get(m).equals("return"))&&(!lw.get(m).equals("lang"))&&(!lw.get(m).equals("new"))&&(!lw.get(m).equals("else"))&&(!lw.get(m).equals("throws"))&&
-                                            (!lw.get(m).equals("whit"))&&(!lw.get(m).equals("that"))&&(!lw.get(m).equals("long"))&&(!lw.get(m).equals("args"))&&(!hasDigit(lw.get(m)))) {
+                                    if((!"package".equalsIgnoreCase(lw.get(m)))&&(!"exception".equalsIgnoreCase(lw.get(m)))&&(!"apache".equalsIgnoreCase(lw.get(m)))&&(!"import".equalsIgnoreCase(lw.get(m)))&&(!"java".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"string".equalsIgnoreCase(lw.get(m)))&&(!"public".equalsIgnoreCase(lw.get(m)))&&(!"private".equalsIgnoreCase(lw.get(m)))&&(!"protected".equalsIgnoreCase(lw.get(m)))&&(!"static".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"final".equalsIgnoreCase(lw.get(m)))&&(!"boolean".equalsIgnoreCase(lw.get(m)))&&(!"void".equalsIgnoreCase(lw.get(m)))&&(!"object".equalsIgnoreCase(lw.get(m)))&&(!"interface".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"extends".equalsIgnoreCase(lw.get(m)))&&(!"javax".equalsIgnoreCase(lw.get(m)))&&(!"beans".equalsIgnoreCase(lw.get(m)))&&(!"new".equalsIgnoreCase(lw.get(m)))&&(!"type".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"throws".equalsIgnoreCase(lw.get(m)))&&(!"else".equalsIgnoreCase(lw.get(m)))&&(!"args".equalsIgnoreCase(lw.get(m)))&&(!"that".equalsIgnoreCase(lw.get(m)))&&(!"null".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"return".equalsIgnoreCase(lw.get(m)))&&(!"long".equalsIgnoreCase(lw.get(m)))&&(!hasDigit(lw.get(m)))){
                                         handeldContext.add(lw.get(m).toLowerCase());
                                     }
                                 }
@@ -59,12 +59,12 @@ public class BasicHandle {
         for(int k = 0; k < handeldContext.size(); k++){
             lastContext = lastContext + " " + handeldContext.get(k);
         }
-        String[] name = filePath.split("\\\\|\\.");
+        String[] name = filePath.split("\\/|\\.");
         String nameString = "";
-        for(int n = 7; n < name.length - 2; n ++){
+        for(int n = 5; n < name.length - 2; n ++){
             nameString = nameString + name[n + 1] + ".";
         }
-        fileNameLast = "C:\\Users\\yangchen\\Desktop\\experimentdata\\"+ nameString +"txt";
+        fileNameLast = "/home/yangchen/ycdoc/"+ nameString +"txt";
         contentToTextFile(fileNameLast,lastContext.trim());
     }
 

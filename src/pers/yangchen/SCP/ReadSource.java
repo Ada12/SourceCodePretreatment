@@ -12,26 +12,38 @@ public class ReadSource {
     private static List<String> filePaths;
 
     public static void main(String[] args){
-        File[] files = new File("C:\\Users\\yangchen\\Desktop\\apache-tomcat-7.0.68-src\\java").listFiles();
-        List<String> paths = new ArrayList<String>();
-        ReadSource.setFilePaths(paths);
-        showFiles(files);
-        for(int i = 0; i < filePaths.size(); i ++){
-            String[] f = filePaths.get(i).split("\\.");
-            if(f[f.length-1].equals("java")){
-                BasicHandle basicHandle = new BasicHandle();
-                try {
-                    basicHandle.HandleCode(filePaths.get(i));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-//        test();
+//        File[] files = new File("/home/yangchen/ycdoc/apache-tomcat-7/java").listFiles();
+//        List<String> paths = new ArrayList<String>();
+//        ReadSource.setFilePaths(paths);
+//        showFiles(files);
+//        for(int i = 0; i < filePaths.size(); i ++){
+//            String[] f = filePaths.get(i).split("\\.");
+//            if(f[f.length-1].equals("java")){
+//                BasicHandle basicHandle = new BasicHandle();
+//                try {
+//                    basicHandle.HandleCode(filePaths.get(i));
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+
+        testFilter();
+//         test();
 //        List<String> lw  = testSeparate("configErrMsg");
 //        for(int i = 0; i < lw.size(); i ++){
 //            System.out.println(lw.get(i));
 //        }
+    }
+
+    private static void testFilter(){
+        String filePath = "/home/yangchen/ycdoc/apache-tomcat-7/java/org/apache/catalina/ant/AbstractCatalinaTask.java";
+        BasicHandle basicHandle = new BasicHandle();
+        try {
+            basicHandle.HandleCode(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void showFiles(File[] files) {
@@ -47,10 +59,10 @@ public class ReadSource {
     }
 
     public static void test(){
-        String a = "C:\\Users\\yangchen\\Desktop\\apache-tomcat-7.0.68-src\\java\\org\\apache\\catalina\\ant\\AbstractCatalinaCommandTask.java";
-        String[] name = a.split("\\\\|\\.");
+        String a = "/home/yangchen/ycdoc/apache-tomcat-7/java/org/apache/catalina/ant/AbstractCatalinaCommandTask.java";
+        String[] name = a.split("\\/|\\.");
         String nameString = "";
-        for(int n = 7; n < name.length - 2; n ++){
+        for(int n = 5; n < name.length - 2; n ++){
                 nameString = nameString + name[n + 1] + ".";
         }
         System.out.print(nameString);
