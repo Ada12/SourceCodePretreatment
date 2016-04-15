@@ -37,12 +37,23 @@ public class BasicHandle {
                             List<String> lw = separateWords(separatedWord[j]);
                             for(int m = 0; m < lw.size(); m ++){
                                 if(lw.get(m).length() > 3){
-                                    if((!"package".equalsIgnoreCase(lw.get(m)))&&(!"exception".equalsIgnoreCase(lw.get(m)))&&(!"apache".equalsIgnoreCase(lw.get(m)))&&(!"import".equalsIgnoreCase(lw.get(m)))&&(!"java".equalsIgnoreCase(lw.get(m)))&&
-                                            (!"string".equalsIgnoreCase(lw.get(m)))&&(!"public".equalsIgnoreCase(lw.get(m)))&&(!"private".equalsIgnoreCase(lw.get(m)))&&(!"protected".equalsIgnoreCase(lw.get(m)))&&(!"static".equalsIgnoreCase(lw.get(m)))&&
-                                            (!"final".equalsIgnoreCase(lw.get(m)))&&(!"boolean".equalsIgnoreCase(lw.get(m)))&&(!"void".equalsIgnoreCase(lw.get(m)))&&(!"object".equalsIgnoreCase(lw.get(m)))&&(!"interface".equalsIgnoreCase(lw.get(m)))&&
-                                            (!"extends".equalsIgnoreCase(lw.get(m)))&&(!"javax".equalsIgnoreCase(lw.get(m)))&&(!"beans".equalsIgnoreCase(lw.get(m)))&&(!"new".equalsIgnoreCase(lw.get(m)))&&(!"type".equalsIgnoreCase(lw.get(m)))&&
-                                            (!"throws".equalsIgnoreCase(lw.get(m)))&&(!"else".equalsIgnoreCase(lw.get(m)))&&(!"args".equalsIgnoreCase(lw.get(m)))&&(!"that".equalsIgnoreCase(lw.get(m)))&&(!"null".equalsIgnoreCase(lw.get(m)))&&
-                                            (!"return".equalsIgnoreCase(lw.get(m)))&&(!"long".equalsIgnoreCase(lw.get(m)))&&(!hasDigit(lw.get(m)))){
+                                    if((!"abstract".equalsIgnoreCase(lw.get(m)))&&(!"assert".equalsIgnoreCase(lw.get(m)))&&(!"boolean".equalsIgnoreCase(lw.get(m)))&&(!"break".equalsIgnoreCase(lw.get(m)))&&(!"byte".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"case".equalsIgnoreCase(lw.get(m)))&&(!"catch".equalsIgnoreCase(lw.get(m)))&&(!"char".equalsIgnoreCase(lw.get(m)))&&(!"class".equalsIgnoreCase(lw.get(m)))&&(!"const".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"continue".equalsIgnoreCase(lw.get(m)))&&(!"default".equalsIgnoreCase(lw.get(m)))&&(!"do".equalsIgnoreCase(lw.get(m)))&&(!"double".equalsIgnoreCase(lw.get(m)))&&(!"else".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"enum".equalsIgnoreCase(lw.get(m)))&&(!"extends".equalsIgnoreCase(lw.get(m)))&&(!"final".equalsIgnoreCase(lw.get(m)))&&(!"finally".equalsIgnoreCase(lw.get(m)))&&(!"float".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"for".equalsIgnoreCase(lw.get(m)))&&(!"if".equalsIgnoreCase(lw.get(m)))&&(!"implements".equalsIgnoreCase(lw.get(m)))&&(!"import".equalsIgnoreCase(lw.get(m)))&&(!"instanceof".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"int".equalsIgnoreCase(lw.get(m)))&&(!"interface".equalsIgnoreCase(lw.get(m)))&&(!"long".equalsIgnoreCase(lw.get(m)))&&(!"native".equalsIgnoreCase(lw.get(m)))&&(!"new".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"package".equalsIgnoreCase(lw.get(m)))&&(!"private".equalsIgnoreCase(lw.get(m)))&&(!"protected".equalsIgnoreCase(lw.get(m)))&&(!"public".equalsIgnoreCase(lw.get(m)))&&(!"return".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"short".equalsIgnoreCase(lw.get(m)))&& (!"static".equalsIgnoreCase(lw.get(m)))&& (!"strictfp".equalsIgnoreCase(lw.get(m)))&& (!"super".equalsIgnoreCase(lw.get(m)))&& (!"switch".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"synchronized".equalsIgnoreCase(lw.get(m)))&& (!"this".equalsIgnoreCase(lw.get(m)))&& (!"throw".equalsIgnoreCase(lw.get(m)))&& (!"throws".equalsIgnoreCase(lw.get(m)))&& (!"transient".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"try".equalsIgnoreCase(lw.get(m)))&& (!"void".equalsIgnoreCase(lw.get(m)))&& (!"volatile".equalsIgnoreCase(lw.get(m)))&&(!"while".equalsIgnoreCase(lw.get(m)))&&(!"javax".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"annotation".equalsIgnoreCase(lw.get(m)))&&(!"persistence".equalsIgnoreCase(lw.get(m)))&&(!"coyote".equalsIgnoreCase(lw.get(m)))&&(!"tomcat".equalsIgnoreCase(lw.get(m)))&&(!"apache".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"tribes".equalsIgnoreCase(lw.get(m)))&&(!"catalina".equalsIgnoreCase(lw.get(m)))&&(!"ioexception".equalsIgnoreCase(lw.get(m)))&&(!"string".equalsIgnoreCase(lw.get(m)))&&(!"null".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"util".equalsIgnoreCase(lw.get(m)))&&(!"factory".equalsIgnoreCase(lw.get(m)))&&(!"param".equalsIgnoreCase(lw.get(m)))&&(!"override".equalsIgnoreCase(lw.get(m)))&&(!"list".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"iterator".equalsIgnoreCase(lw.get(m)))&&(!"async".equalsIgnoreCase(lw.get(m)))&&(!"type".equalsIgnoreCase(lw.get(m)))&&(!"object".equalsIgnoreCase(lw.get(m)))&&(!"error".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"mbean".equalsIgnoreCase(lw.get(m)))&&(!"exception".equalsIgnoreCase(lw.get(m)))&&(!"mbean".equalsIgnoreCase(lw.get(m)))&&(!"chars".equalsIgnoreCase(lw.get(m)))&&(!"arrays".equalsIgnoreCase(lw.get(m)))&&
+                                            (!"encoded".equalsIgnoreCase(lw.get(m)))&&(!"encode".equalsIgnoreCase(lw.get(m)))&&(!"line".equalsIgnoreCase(lw.get(m)))&&(!"nonce".equalsIgnoreCase(lw.get(m)))&&
+                                            (!hasDigit(lw.get(m)))){
                                         handeldContext.add(lw.get(m).toLowerCase());
                                     }
                                 }
@@ -64,7 +75,7 @@ public class BasicHandle {
         for(int n = 5; n < name.length - 2; n ++){
             nameString = nameString + name[n + 1] + ".";
         }
-        fileNameLast = "/home/yangchen/ycdoc/"+ nameString +"txt";
+        fileNameLast = "/home/yangchen/ycdoc/tomcatpre/"+ nameString +"txt";
         contentToTextFile(fileNameLast,lastContext.trim());
     }
 

@@ -12,28 +12,31 @@ public class ReadSource {
     private static List<String> filePaths;
 
     public static void main(String[] args){
-//        File[] files = new File("/home/yangchen/ycdoc/apache-tomcat-7/java").listFiles();
-//        List<String> paths = new ArrayList<String>();
-//        ReadSource.setFilePaths(paths);
-//        showFiles(files);
-//        for(int i = 0; i < filePaths.size(); i ++){
-//            String[] f = filePaths.get(i).split("\\.");
-//            if(f[f.length-1].equals("java")){
-//                BasicHandle basicHandle = new BasicHandle();
-//                try {
-//                    basicHandle.HandleCode(filePaths.get(i));
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
+        File[] files = new File("/home/yangchen/ycdoc/apache-tomcat-7/java").listFiles();
+        List<String> paths = new ArrayList<String>();
+        ReadSource.setFilePaths(paths);
+        showFiles(files);
+        for(int i = 0; i < filePaths.size(); i ++){
+            String[] f = filePaths.get(i).split("\\.");
+            if(f[f.length-1].equals("java")){
+                BasicHandle basicHandle = new BasicHandle();
+                try {
+                    basicHandle.HandleCode(filePaths.get(i));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
-        testFilter();
+//        testFilter();
 //         test();
 //        List<String> lw  = testSeparate("configErrMsg");
 //        for(int i = 0; i < lw.size(); i ++){
 //            System.out.println(lw.get(i));
 //        }
+
+//        File[] files = new File("/home/yangchen/ycdoc/apache-tomcat-7/java").listFiles();
+//        showFiles(files);
     }
 
     private static void testFilter(){
