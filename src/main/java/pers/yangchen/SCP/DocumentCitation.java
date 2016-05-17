@@ -1,5 +1,8 @@
 package pers.yangchen.SCP;
 
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -249,6 +252,26 @@ public class DocumentCitation {
         return docId;
     }
 
+    //get docs id and the key is name, value is id
+    public static Map<String, String> getDocName() throws IOException {
+        String filePath = "/home/yangchen/ycdoc/filelist";
+        InputStream is = new FileInputStream(filePath);
+        String line;
+        Map<String, String> docId = new HashMap<String, String>();
+        int i = 1;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        line = reader.readLine();
+        while (line != null){
+            String[] name = line.split("\\/");
+            docId.put(String.valueOf(i),name[5]);
+            i ++;
+            line = reader.readLine();
+        }
+        reader.close();
+        is.close();
+        return docId;
+    }
+
     //get all files
     private static void showFiles(File[] files) {
         for(File file : files){
@@ -344,25 +367,30 @@ public class DocumentCitation {
         return result;
     }
 
-    public static void mergeFiles(int topicNum) throws IOException {
+    public static void mergeFiles(int topicNum) throws IOException, ParserConfigurationException, SAXException {
         FileChannel outChannel = null;
         int BUFSIZE = 1024 * 100;
         Map<String, List<String>> all = getModule(topicNum);
-        List<String> names = getFileNames(topicNum);
+        List<String> names = GetRTCNames.getNames("/usr/local/mallet-2.0.7/tomcat" + topicNum + "/topic-phrases.xml");
         for(int i = 0; i < all.size(); i ++){
             List<String> module = all.get(String.valueOf(i));
-            String outFile = "/home/yangchen/ycdoc/module/m100/" + names.get(i);
+            String outFile = "/home/yangchen/ycdoc/module/m"+ topicNum +"/" + names.get(i);
             outChannel = new FileOutputStream(outFile).getChannel();
-            for(int j = 0; j < module.size(); j ++){
-                String filePath = "/home/yangchen/ycdoc/tomcatpre/" + module.get(j);
-                FileChannel fc = new FileInputStream(filePath).getChannel();
-                ByteBuffer bb = ByteBuffer.allocate(BUFSIZE);
-                while(fc.read(bb) != -1){
-                    bb.flip();
-                    outChannel.write(bb);
-                    bb.clear();
+            if(module != null) {
+                for(int j = 0; j < module.size(); j ++){
+                    String filePath = "/home/yangchen/ycdoc/tomcatpre/" + module.get(j);
+                    File file = new File(filePath);
+                    if(file.exists()) {
+                        FileChannel fc = new FileInputStream(filePath).getChannel();
+                        ByteBuffer bb = ByteBuffer.allocate(BUFSIZE);
+                        while (fc.read(bb) != -1) {
+                            bb.flip();
+                            outChannel.write(bb);
+                            bb.clear();
+                        }
+                        fc.close();
+                    }
                 }
-                fc.close();
             }
         }
 
@@ -440,6 +468,138 @@ public class DocumentCitation {
             line = reader.readLine();
         }
         WriteToFile.contentToTextFile("/home/yangchen/ycdoc/cita", nl);
+    }
+
+
+
+    //write new method module citation to file
+    public static void getNewMethodModuleCitation() throws IOException {
+        Map<String, List<String>> citation = getCitation();
+
+        File[] files = new File("/home/yangchen/ycdoc/cataTemp").listFiles();
+        List<String> paths = new ArrayList<String>();
+        DocumentCitation.setFilePaths(paths);
+        showFiles(files);
+        //get module docs : all
+        Map<String, List<String>> all = new HashMap<String, List<String>>();
+        Map<String, String> moduleBelongTo = new HashMap<String, String>();
+        for(int m = 0; m < filePaths.size(); m++) {
+            InputStream is = new FileInputStream(filePaths.get(m));
+            String line;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            line = reader.readLine();
+            List<String> fileNames = new ArrayList<String>();
+            String[] p = filePaths.get(m).split("\\/");
+            String key = "org.apache.catalina." + p[p.length-1];
+            while (line != null) {
+                String[] content = line.split("\\/");
+                fileNames.add(content[content.length - 1]);
+                moduleBelongTo.put(content[content.length - 1], key);
+                line = reader.readLine();
+            }
+            all.put(key, fileNames);
+            reader.close();
+            is.close();
+        }
+        Map<String, String> keyNames = new HashMap<String, String>();
+        keyNames.put("0", "org.apache.catalina.0.txt");
+        keyNames.put("1", "org.apache.catalina.ant.txt");
+        keyNames.put("2", "org.apache.catalina.authenticator.txt");
+        keyNames.put("3", "org.apache.catalina.comet.txt");
+        keyNames.put("4", "org.apache.catalina.connector.txt");
+        keyNames.put("5", "org.apache.catalina.core.txt");
+        keyNames.put("6", "org.apache.catalina.deploy.txt");
+        keyNames.put("7", "org.apache.catalina.filters.txt");
+        keyNames.put("8", "org.apache.catalina.ha.txt");
+        keyNames.put("9", "org.apache.catalina.loader.txt");
+        keyNames.put("10", "org.apache.catalina.manager.txt");
+        keyNames.put("11", "org.apache.catalina.mbeans.txt");
+        keyNames.put("12", "org.apache.catalina.realm.txt");
+        keyNames.put("13", "org.apache.catalina.security.txt");
+        keyNames.put("14", "org.apache.catalina.servlets.txt");
+        keyNames.put("15", "org.apache.catalina.session.txt");
+        keyNames.put("16", "org.apache.catalina.ssi.txt");
+        keyNames.put("17", "org.apache.catalina.startup.txt");
+        keyNames.put("18", "org.apache.catalina.tribes.txt");
+        keyNames.put("19", "org.apache.catalina.users.txt");
+        keyNames.put("20", "org.apache.catalina.util.txt");
+        keyNames.put("21", "org.apache.catalina.valves.txt");
+        keyNames.put("22", "org.apache.catalina.websocket.txt");
+
+        //should konw which part one doc belongs to
+
+        Map<String, String> newkeyNames = new HashMap<String, String>();
+        newkeyNames.put("org.apache.catalina.0.txt","0");
+        newkeyNames.put("org.apache.catalina.ant.txt","1");
+        newkeyNames.put("org.apache.catalina.authenticator.txt","2");
+        newkeyNames.put("org.apache.catalina.comet.txt","3");
+        newkeyNames.put("org.apache.catalina.connector.txt","4");
+        newkeyNames.put("org.apache.catalina.core.txt","5");
+        newkeyNames.put("org.apache.catalina.deploy.txt","6");
+        newkeyNames.put("org.apache.catalina.filters.txt","7");
+        newkeyNames.put("org.apache.catalina.ha.txt","8");
+        newkeyNames.put("org.apache.catalina.loader.txt","9");
+        newkeyNames.put("org.apache.catalina.manager.txt","10");
+        newkeyNames.put("org.apache.catalina.mbeans.txt","11");
+        newkeyNames.put("org.apache.catalina.realm.txt","12");
+        newkeyNames.put("org.apache.catalina.security.txt","13");
+        newkeyNames.put("org.apache.catalina.servlets.txt","14");
+        newkeyNames.put("org.apache.catalina.session.txt","15");
+        newkeyNames.put("org.apache.catalina.ssi.txt","16");
+        newkeyNames.put("org.apache.catalina.startup.txt","17");
+        newkeyNames.put("org.apache.catalina.tribes.txt","18");
+        newkeyNames.put("org.apache.catalina.users.txt","19");
+        newkeyNames.put("org.apache.catalina.util.txt","20");
+        newkeyNames.put("org.apache.catalina.valves.txt","21");
+        newkeyNames.put("org.apache.catalina.websocket.txt","22");
+
+
+
+
+        //Map<String, List<String>> moduleTopic = getModuleTopic(topicNum);
+        //Map<String, String> moduleDoc = getModuleDoc(topicNum);
+
+        Map<String, String> getId = getDocId();
+        Map<String, String> getName = getDocName();
+        Map<String, Map<String, Integer>> moduleCitation = new HashMap<String, Map<String, Integer>>();
+        for(int i = 0; i < all.size(); i++){
+            List<String> docsId = all.get(keyNames.get(String.valueOf(i)));
+            Map<String, Integer> imsCount = new HashMap<String, Integer>();
+            if(docsId != null) {
+                for (int k = 0; k < all.size(); k++) {
+                    imsCount.put(String.valueOf(k), 0);
+                }
+                for (int j = 0; j < docsId.size(); j++) {
+                    List<String> imsId = citation.get(getId.get(docsId.get(j)));
+                    if (imsId != null) {
+                        for (int n = 0; n < imsId.size(); n++) {
+                            if(getName.get(imsId.get(n)) != null) {
+                                String imsModuleName = moduleBelongTo.get(getName.get(imsId.get(n)));
+                                if(imsModuleName != null) {
+                                    String imsModuleId = newkeyNames.get(imsModuleName);
+                                    int count = imsCount.get(imsModuleId) + 1;
+                                    imsCount.put(imsModuleId, count);
+                                }
+                            }
+                        }
+                    }
+                }
+                moduleCitation.put(String.valueOf(i), imsCount);
+            }
+        }
+
+        String moduleCitationStr = "";
+        for(int x = 0; x < moduleCitation.size(); x ++){
+            Map<String, Integer> imsCountMap = moduleCitation.get(String.valueOf(x));
+            if(imsCountMap != null){
+                for(int y = 0; y < imsCountMap.size(); y ++){
+                    if(x != y){
+                        moduleCitationStr = moduleCitationStr + (x+1) + " " + (y+1) + " 1" + "\n";
+                    }
+                }
+            }
+        }
+        WriteToFile.contentToTextFile("/home/yangchen/ycdoc/cataModuleFull/newMethod.txt", moduleCitationStr);
     }
 
 }
